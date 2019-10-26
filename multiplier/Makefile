@@ -1,6 +1,6 @@
 vivado = vivado -mode tcl -source
 script = compile.tcl
-constr = Basys3_Master.xdc
+constr = constraints
 
 .PHONY: build clean
 
