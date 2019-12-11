@@ -28,13 +28,20 @@ module LRU #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64
     logic [associativity-1:0] 	   reg_equals_idx;
     logic [associativity-1:0] 	   shift_reg_en;
 
+    assign shift_reg_en[associativity-1] = reg_equals_idx[associativity-1];
     genvar i;
     generate
 	for(i = associativity-1; i >= 0; i--) begin
-	    assign reg_equals_idx[i] = idx_i == lru_shift_registers[i][9:0];
-	    assign shift_reg_en[i] = |(~reg_equals_idx[associativity-1:i]) & valid_i;
+	    assign reg_equals_idx[i] = (idx_i != lru_shift_registers[associativity-1][9:0]) & valid_i;
 	end
     endgenerate
+
+    always_comb begin
+        
+        for(int j = associativity-2; j >= 0; j--) begin
+            shift_reg_en[j] = shift_reg_en[j+1] & shift_reg_en[j];
+        end
+    end
 
     always_ff @(posedge clk_i) begin
 	idx_o <= lru_shift_registers[0][9:0];
