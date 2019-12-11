@@ -1,0 +1,86 @@
+m255
+K4
+z2
+!s11f MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/nick/fpga_implementations/cache
+vLRU
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1576038039
+!i10b 1
+!s100 hcIaI]fMk]C7>2Zn>gB_I2
+!s11b ZRRZ8N^_O2Ml2N[`ce3SV3
+I7?=Qm@9fR9ZmV0i<2N@?c3
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1574464981
+8LRU.sv
+FLRU.sv
+L0 20
+Z4 OV;L;2019.2;69
+r1
+!s85 0
+31
+Z5 !s108 1576038039.000000
+!s107 xilinx_extern/RAM.v|LRU_tb.sv|LRU.sv|
+Z6 !s90 -sv|LRU.sv|LRU_tb.sv|xilinx_extern/RAM.v|
+!i113 1
+o-sv
+Z7 tCvgOpt 0
+n@l@r@u
+vLRU_tb
+R1
+R2
+!i10b 1
+!s100 DlY@ROU75kUP7NTC4c8dK3
+!s11b lB68DRQiImMHd1Xnb7dMZ2
+IBO7l]IfB;Co]NmXdCnGjD0
+R3
+S1
+R0
+w1576038004
+8LRU_tb.sv
+FLRU_tb.sv
+L0 21
+R4
+r1
+!s85 0
+31
+R5
+Z8 !s107 xilinx_extern/RAM.v|LRU_tb.sv|LRU.sv|
+R6
+!i113 1
+o-sv
+R7
+n@l@r@u_tb
+vRAM
+R1
+R2
+!i10b 1
+!s100 joAJik0:mFRBB3:EO^ozB0
+!s11b T1U[J^^SE9O@hRH1<RGDH2
+Ij0I;c47UA[1=k707LXZJ=2
+R3
+S1
+R0
+w1574462994
+8xilinx_extern/RAM.v
+Fxilinx_extern/RAM.v
+L0 56
+R4
+r1
+!s85 0
+31
+R5
+R8
+R6
+!i113 1
+o-sv
+R7
+n@r@a@m

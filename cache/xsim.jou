@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# xsim v2019.2 (64-bit)
+# SW Build 2708876 on Wed Nov  6 21:39:14 MST 2019
+# IP Build 2700528 on Thu Nov  7 00:09:20 MST 2019
+# Start of session at: Fri Nov 22 17:25:33 2019
+# Process ID: 3120
+# Current directory: /home/nick/fpga_implementations/cache
+# Command line: xsim -nolog -mode tcl -source {xsim.dir/top_sim/xsim_script.tcl}
+# Log file: 
+# Journal file: /home/nick/fpga_implementations/cache/xsim.jou
+#-----------------------------------------------------------
+source xsim.dir/top_sim/xsim_script.tcl
+source waveform.tcl
+quit
