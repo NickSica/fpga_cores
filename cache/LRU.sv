@@ -24,17 +24,22 @@ module LRU #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64
      output logic [9:0] idx_o);
 
     //parameter idx_bits = $clog2(cache_size);
-    logic [associativity-1:0][10:0] lru_shift_registers;  // bit 10 is a valid bit to make sure the data is valid
+    logic [associativity-1:0][10:0] lru_shift_registers = {(associativity-1){11'b0}};  // bit 10 is a valid bit to make sure the data is valid
     logic [associativity-1:0] 	   reg_equals_idx;
     logic [associativity-1:0] 	   shift_reg_en;
 
-    genvar i;
-    generate
+    always_comb begin
 	for(i = associativity-1; i >= 0; i--) begin
-	    assign reg_equals_idx[i] = idx_i == lru_shift_registers[i][9:0];
-	    assign shift_reg_en[i] = |(~reg_equals_idx[associativity-1:i]) & valid_i;
+	    reg_equals_idx[i] = (idx_i != lru_shift_registers[associativity-1][9:0]) & valid_i;
 	end
-    endgenerate
+    end
+
+    always_comb begin
+        shift_reg_en[associativity-1] = reg_equals_idx[associativity-1];
+        for(int j = associativity-2; j >= 0; j--) begin
+            shift_reg_en[j] = reg_equals_idx[j+1] & reg_equals_idx[j];
+        end
+    end
 
     always_comb begin
 	valid_o = 1'b0;
@@ -46,7 +51,7 @@ module LRU #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64
 	lru_shift_registers[associativity-1] <= {1'b1, idx_i};
 	
 	for(int j = 0; j < associativity-1; j++) begin
-	    if(shift_reg_en[j]) begin
+	    if(shift_reg_en[j+1]) begin
 		lru_shift_registers[j] <= lru_shift_registers[j+1];
 	    end	    
 	end   
