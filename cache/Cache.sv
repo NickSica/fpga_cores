@@ -18,7 +18,7 @@
 *********************************************************************************/
 
 module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 32, word_wid = 64) 
-    (input en_i, clk_i,
+    (input logic en_i, clk_i,
      input logic [31:0] addr_i,
      output logic [7:0] data_o);
    
@@ -27,36 +27,50 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
     typedef enum { IDLE, READ_0, READ_1, READ_2, READ_3  } state_t;
     state_t state = IDLE;
 
-    logic [0:4095][63:0] main_mem;
+    logic [63:0] ram [0:4095];
     //logic [32:0] 				      ram_data, r_data;
-    logic 					      hit, hit_valid;
-   
+    logic [cache_size-1:0][associativity-1:0] hit, hit_valid;
+ 
     initial begin
 	assert(word_wid % 8 != 0) begin
 	    $error("Data width is not a multiple of 8!");
 	end
     end
 
-    genvar i;
+    genvar i, replace_valid, replace_idx;
     generate
 	if(cache_type == 0) begin  // set associative
-	    logic [associativity-1:0][cache_size-1:0][14:0] tag_store;  // { valid bit, 14 bit tag store }
-	    logic [associativity-1:0][cache_size-1:0][word_wid-1:0] data_store;    
+	    logic [cache_size-1:0][associativity-1:0][14:0] tag_store;  // { valid bit, 14 bit tag store }
+	    logic [cache_size-1:0][associativity-1:0][word_wid-1:0] data_store;
 	    //data_cache_t [associativity - 1:0] data_store;
 	    
-	    always_ff @(posedge clk_i) begin
-		tag_store[0][addr_i[31:22]] <= addr_i[21:8];
-	    end
-
 	    for(i = 0; i < cache_size; i++) begin: g_lru
-		LRU #(cache_type, cache_size, associativity, word_wid) lru(.clk_i, .hit_i(hit), .valid_i(hit_valid), .idx_i(), .valid_o(replace_valid), .idx_o(replace_idx));
-
-		always_ff @(replace_valid) begin
-		    if(replace_valid) begin
-			data_store[replace_idx][tag_store[addr_i[31:22]]] <= main_mem[addr_i[31:8]];
+		LRU #(cache_type, cache_size, associativity, word_wid) lru(.clk_i, .hit_i(&hit[addr_i[31:22]]), .valid_i(&hit_valid[addr_i[31:22]]), 
+									   .idx_i(tag_store[addr_i[31:22]]), 
+									   .valid_o(replace_valid), .idx_o(replace_idx));
+		
+		    
+		always_ff @(posedge replace_valid) begin
+		    data_store[tag_store[addr_i[31:22]]][replace_idx] <= ram[addr_i[31:8]];
+		end // always_ff @ (posedge clk_i)
+	    end // block: g_lru
+	    
+	    always_ff @(posedge clk_i) begin
+		for(int k = 0; k < associativity; k++) begin 
+		    if(tag_store[addr_i[31:22]][k][14] && (tag_store[addr_i[31:22]][k][13:0] == addr_i[21:8])) begin
+			hit[addr_i[31:22]][k] <= 1'b1;
+			hit_valid[addr_i[31:22]][k] <= 1'b1;
+		    end else if(tag_store[addr_i[31:22]][k][14] && (tag_store[addr_i[31:22]][k][13:0] != addr_i[21:8])) begin
+			hit[addr_i[31:22]][k] <= 1'b0;
+			hit_valid[addr_i[31:22]][k] <= 1'b1;
+		    end else if(k == 0 || tag_store[addr_i[31:22]][k-1][14]) begin
+			tag_store[addr_i[31:22]][k] <= {1'b1, addr_i[21:8]};
+			hit[addr_i[31:22]][k] <= 1'b1;
+			hit_valid[addr_i[31:22]][k] <= 1'b1;		    
 		    end
-		end
-	    end
+		end // for (int k = 0; k < associativity; k++)
+	    end // always_ff @ (posedge clk_i)
+		
 	end else if(cache_type == 1) begin  // direct mapped
 	    logic [cache_size-1:0][14:0] tag_store;  // { valid bit, 14 bit tag store }
 	    logic [cache_size-1:0][word_wid-1:0] data_store;
@@ -64,7 +78,7 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
 	    always_ff @(posedge clk_i) begin
 		if(tag_store[addr_i[17:8]] == addr_i[31:18]) begin
 		    hit <= 1'b1;
-		    data_o <= data_store[addr_i[17:8]][addr_i[7:3]][addr_i[2:0]];
+		    data_o <= (data_store[addr_i[17:8]][addr_i[7:3]][((addr_i[2:0] + 1) << 3) : (addr_i[2:0] << 3)] & (8'b11111111 << (addr_i[2:0] << 3)));
 		end else begin
 		    hit <= 1'b0;	    
 		end

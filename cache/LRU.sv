@@ -36,10 +36,14 @@ module LRU #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64
 	end
     endgenerate
 
+    always_comb begin
+	valid_o = 1'b0;
+	valid_o = ~hit_i & lru_shift_registers[0][10] & valid_i;
+    end
+    
     always_ff @(posedge clk_i) begin
 	idx_o <= lru_shift_registers[0][9:0];
 	lru_shift_registers[associativity-1] <= {1'b1, idx_i};
-	valid_o <= ~hit_i & lru_shift_registers[0][10];
 	
 	for(int j = 0; j < associativity-1; j++) begin
 	    if(shift_reg_en[j]) begin

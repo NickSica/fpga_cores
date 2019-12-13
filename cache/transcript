@@ -1,42 +1,7 @@
 # vsim LRU_tb 
-# Start time: 23:20:45 on Dec 10,2019
+# Start time: 19:21:07 on Dec 12,2019
 # Loading sv_std.std
 # Loading work.LRU_tb
 # Loading work.LRU
-run
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/librt.so.1 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libdl.so.2 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libm.so.6 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libpthread.so.0 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libc.so.6 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /lib/ld-linux.so.2 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libnss_files.so.2 : module was loaded at an absolute address.
-do /home/nick/fpga_implementations/cache/wave.do
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-run
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/librt.so.1 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libdl.so.2 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libm.so.6 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libpthread.so.0 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libc.so.6 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /lib/ld-linux.so.2 : module was loaded at an absolute address.
-# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libnss_files.so.2 : module was loaded at an absolute address.
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-# End time: 23:40:01 on Dec 10,2019, Elapsed time: 0:19:16
-# Errors: 11, Warnings: 7
+# End time: 19:21:10 on Dec 12,2019, Elapsed time: 0:00:03
+# Errors: 0, Warnings: 0

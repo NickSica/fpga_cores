@@ -4,8 +4,8 @@ tb_script = waveform.tcl
 constr = ./V707/constraints.xdc
 
 VLOG_SRC_FILES = LRU.sv \
-		 LRU_tb.sv \
-		 xilinx_extern/RAM.v 
+		 Cache.sv \
+		 Cache_TB.sv
 
 .PHONY: build clean
 
@@ -14,7 +14,7 @@ build:
 
 test:
 	vlog -sv $(VLOG_SRC_FILES)
-	vsim LRU_tb
+	vsim Cache_TB
 
 clean: 
 	-rm -r build
