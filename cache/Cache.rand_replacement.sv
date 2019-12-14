@@ -21,60 +21,70 @@ module Cache #(cache_type = 0, cache_size = 5, associativity = 3, word_num = 32,
     (input logic en_i, clk_i,
      input logic [31:0] addr_i,
      output logic [7:0] data_o);
-
-    parameter int 	IDX_WID = $ceil($clog2(associativity));   
+    parameter int 	IDX_WID = $ceil($clog2(associativity));
     //typedef logic [word_num-1:0][data_wid/8-1:0][7:0] block_t;
     //typedef block_t [cache_size-1:0] data_cache_t;
     //typedef enum { IDLE, READ_0, READ_1, READ_2, READ_3  } state_t;
     //state_t state = IDLE;
 
     logic [63:0] ram [0:4095];
-    //logic [32:0] 				      ram_data, r_data;
-    logic [associativity-1:0] hit = {cache_size{ {associativity{1'b0}} }};
-    logic [associativity-1:0] hit_valid = {cache_size{ {associativity{1'b0}} }};
-    logic [IDX_WID:0] 	      hit_idx = {cache_size{ {IDX_WID+1{1'b0}} }};
-    logic [associativity-1:0] reg_en = {cache_size{ {associativity{1'b0}} }};
-    logic [cache_size-1:0][IDX_WID:0] 	      replace_idx;
-    logic [cache_size-1:0] 		      replace_valid;
 
-    logic 				      and_reduced_tag;
-    
+    //logic [32:0] 				      ram_data, r_data;
+    logic [cache_size-1:0][associativity-1:0] hit = {cache_size{ {associativity{1'b0}} }};
+    logic [cache_size-1:0][associativity-1:0] hit_valid = {cache_size{ {associativity{1'b0}} }};
+    logic [cache_size-1:0][IDX_WID-1:0] hit_idx = {cache_size{ {IDX_WID{1'b0}} }};
+    logic [cache_size-1:0][IDX_WID-1:0] replace_idx = {cache_size{ {IDX_WID{1'b0}} }};
+    logic [cache_size-1:0] 				   replace_valid = {cache_size{1'b0}};
+    logic 						   and_reduced_tag;
  
     initial begin
 	assert(word_wid % 8 == 0);
     end
 
-    genvar i;
     generate
 	if(cache_type == 0) begin  // set associative
-	    logic [cache_size-1:0][associativity-1:0][14:0] tag_store = {cache_size{ {associativity{15'b0}} }};  // { valid bit, 14 bit tag store }
+	    logic [cache_size-1:0][associativity-1:0][14:0] tag_store = {cache_size{ {associativity{15'b0} } }};  // { valid bit, 14 bit tag store }
 	    logic [cache_size-1:0][associativity-1:0][word_wid-1:0] data_store = {cache_size{ {associativity{ {word_wid{1'b0}} }} }};
 	    //data_cache_t [associativity - 1:0] data_store;
 	    
-	    for(i = 0; i < cache_size; i++) begin: g_lru
-		LRU #(cache_type, cache_size, associativity, word_wid) lru(.clk_i, .hit_i(|hit[i]), .valid_i(|hit_valid[i]), .reg_en_i(reg_en), .idx_i(hit_idx), 
-									   .valid_o(replace_valid[i]), .idx_o(replace_idx[i]));
-	    end // block: g_lru
-
+//	    for(i = 0; i < cache_size; i++) begin: g_lru
+		
+//		LRU #(cache_type, cache_size, associativity, word_wid) lru(.clk_i, .hit_i(|hit[i]), .valid_i(|hit_valid[i]), .idx_i(hit_idx[i]), 
+//									   .valid_o(replace_valid[i]), .idx_o(replace_idx[i]));
+//	    end // block: g_lru
+	
 	always_comb begin
-	    if(replace_valid[addr_i[24:22]]) begin
-		data_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] = ram[addr_i[31:8]];
-		tag_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] = {1'b1, addr_i[21:8]};
+	    and_reduced_tag = tag_store[addr_i[24:22]][2][14] & tag_store[addr_i[24:22]][1][14] & tag_store[addr_i[24:22]][0][14];
+	    if(and_reduced_tag && ~|hit[addr_i[24:22]] && |hit_valid[addr_i[24:22]]) begin
+		replace_valid[addr_i[24:22]] = 1'b1;
+		replace_idx[addr_i[24:22]] = 2'b10;
+	    end else if(~and_reduced_tag && ~|hit[addr_i[24:22]] && |hit_valid[addr_i[24:22]])begin
+	      for(logic[IDX_WID-1:0] k = 0; k < associativity; k++) begin
+		  if(~tag_store[addr_i[24:22]][k][14]) begin
+		      replace_valid[addr_i[24:22]] = 1'b1;
+		      replace_idx[addr_i[24:22]] = k;
+		  end
+	      end	
 	    end
 	end
 
-	
-	    always_ff @(posedge clk_i) begin
-		for(logic[IDX_WID:0] k = associativity-1; k >= 0; k--) begin 
-		    if(tag_store[addr_i[24:22]][k][14] && (tag_store[addr_i[24:22]][k][13:0] == addr_i[21:8])) begin
-			hit_valid[k] <= 1'b1;
-			hit[k] <= 1'b1;
-			reg_en[k] <= 0;
-			hit_idx <= k;
-		    end else begin
-			hit[k] <= 1'b0;
-			hit_valid[k] <= 1'b1;
-			reg_en[k] <= reg_en[k+1] | (k == associativity-1);
+
+	always_ff @(posedge clk_i) begin
+	    if(replace_valid[addr_i[24:22]]) begin
+		data_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] <= ram[addr_i[31:8]];		
+		tag_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] <= {1'b1, addr_i[21:8]};
+	    end
+	end
+	   
+	always_ff @(posedge clk_i) begin
+	    for(logic[IDX_WID-1:0] k = 0; k < associativity; k++) begin 
+		if(tag_store[addr_i[31:22]][k][14] && (tag_store[addr_i[31:22]][k][13:0] == addr_i[21:8])) begin
+		    hit_valid[addr_i[31:22]][k] <= 1'b1;
+		    hit[addr_i[31:22]][k] <= 1'b1;
+		    hit_idx[addr_i[31:22]] <= k;
+		end else begin
+		    hit[addr_i[31:22]][k] <= 1'b0;
+		    hit_valid[addr_i[31:22]][k] <= 1'b1;
 		    /* 
 		    end else if(tag_store[addr_i[31:22]][k][14] && (tag_store[addr_i[31:22]][k][13:0] != addr_i[21:8])) begin
 		     	hit[addr_i[31:22]][k] <= 1'b0;
@@ -87,6 +97,7 @@ module Cache #(cache_type = 0, cache_size = 5, associativity = 3, word_num = 32,
 		    end
 		end // for (int k = 0; k < associativity; k++)
 	    end // always_ff @ (posedge clk_i)
+		
 	end else if(cache_type == 1) begin  // direct mapped
 	    logic [cache_size-1:0][14:0] tag_store;  // { valid bit, 14 bit tag store }
 	    logic [cache_size-1:0][word_wid-1:0] data_store;

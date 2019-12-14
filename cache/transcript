@@ -1,7 +1,22 @@
-# vsim LRU_tb 
-# Start time: 19:21:07 on Dec 12,2019
+# vsim -do "cache_wave.do" -do "run 30ns" Cache_TB 
+# Start time: 20:13:53 on Dec 13,2019
 # Loading sv_std.std
-# Loading work.LRU_tb
+# Loading work.Cache_TB
+# Loading work.Cache
 # Loading work.LRU
-# End time: 19:21:10 on Dec 12,2019, Elapsed time: 0:00:03
-# Errors: 0, Warnings: 0
+# do cache_wave.do
+# run 30ns
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/librt.so.1 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libdl.so.2 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libm.so.6 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libpthread.so.0 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libc.so.6 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /lib/ld-linux.so.2 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libnss_files.so.2 : module was loaded at an absolute address.
+# ** Error: (vsim-3) System call 'mmap()' failed.
+# Operation not permitted. (errno = EPERM)
+# ** Fatal: (vsim-4) ****** Memory allocation failure. *****
+# Attempting to allocate 131072 bytes
+# Please check your system for available memory and swap space.
+# End time: 20:14:38 on Dec 13,2019, Elapsed time: 0:00:45
+# Errors: 2, Warnings: 7
