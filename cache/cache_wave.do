@@ -1,13 +1,12 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate -group cache /Cache_TB/cache/reg_en
-add wave -noupdate -group cache /Cache_TB/cache/replace_idx
-add wave -noupdate -group cache /Cache_TB/cache/replace_valid
-add wave -noupdate -group cache /Cache_TB/cache/genblk1/tag_store
-add wave -noupdate -group cache /Cache_TB/cache/genblk1/data_store
+add wave -noupdate -group TB /Cache_TB/*
+add wave -noupdate -expand -group Cache /Cache_TB/cache/*
+add wave -noupdate -expand -group LRU {/Cache_TB/cache/genblk1/g_lru[0]/lru/*}
+add wave -noupdate -expand -group LRU {/Cache_TB/cache/genblk1/*}
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {0 ps} 0}
-quietly wave cursor active 0
+WaveRestoreCursors {{Cursor 1} {38864 ps} 0}
+quietly wave cursor active 1
 configure wave -namecolwidth 150
 configure wave -valuecolwidth 100
 configure wave -justifyvalue left
@@ -22,4 +21,5 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {26931 ps} {30162 ps}
+WaveRestoreZoom {0 ps} {63 ns}
+run 30ns
