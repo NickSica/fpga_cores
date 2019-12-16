@@ -21,9 +21,8 @@
 module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 32, word_wid = 64) 
     (input logic clk_i, wr_en_i, rd_en_i, rst_i,
      input logic [2:0]  store_type_i, 
-     input logic [31:0] addr_i,
-     input logic [63:0] data_i,
-     output logic [7:0] data_o);
+     input logic [63:0] addr_i, data_i,
+     output logic [63:0] data_o);
 
     parameter int 	IDX_WID = $ceil($clog2(associativity));   
     //typedef logic [word_num-1:0][data_wid/8-1:0][7:0] block_t;
@@ -31,7 +30,7 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
     //typedef enum { IDLE, READ_0, READ_1, READ_2, READ_3  } state_t;
     //state_t state = IDLE;
 
-    logic [7:0] ram [0:8191];
+    logic [63:0] ram [0:4095];
     //logic [32:0] 				      ram_data, r_data;
 
     logic [associativity-1:0] hit = {associativity{1'b0}};
@@ -49,16 +48,19 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
 
     always_ff @(posedge clk_i) begin
         if(wr_en_i) begin
-            ram[addr_i[31:8]] <= data_i[7:0];
+            ram[addr_i[31:0]][7:0] <= data_i[7:0];
 
             if(store_type_i[0]) begin
-                ram[addr_i[31:8] + 1] <= data_i[15:8];
+                ram[addr_i[31:0]][15:8] <= data_i[15:8];
             end 
             
             if(store_type_i[1]) begin
-                ram[addr_i[31:8] + 2] <= data_i[23:16];
-                ram[addr_i[31:8] + 3] <= data_i[31:24];
+                ram[addr_i[31:0]][31:16] <= data_i[31:16];
             end
+
+	    if(store_type_i[0] & store_type_i[1]) begin
+		ram[addr_i[31:0]][63:32] <= data_i[63:32];
+	    end	    
         end
     end
 
@@ -75,29 +77,30 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
 	    end // block: g_lru
 
 	    always_ff @(posedge clk_i) begin
-	        if(replace_valid[addr_i[24:22]] & wr_en_i) begin
-	    	    data_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] <= ram[addr_i[31:8]];
-	    	    tag_store[addr_i[24:22]][replace_idx[addr_i[24:22]]] <= {1'b1, addr_i[21:8]};
+	        if(replace_valid[addr_i[31:22]] & wr_en_i) begin
+	    	    data_store[addr_i[31:22]][replace_idx[addr_i[31:22]]] <= ram[addr_i[31:0]];
+	    	    tag_store[addr_i[31:22]][replace_idx[addr_i[31:22]]] <= {1'b1, addr_i[21:8]};
 	        end
 	    end
 
 	    always_latch begin
             inval_entry = {associativity{1'b0}};
-            if(wr_en_i) begin
+            if(rd_en_i) begin
                 for(logic[IDX_WID-1:0] k = 0; k < associativity; k++) begin
-                    if(~tag_store[addr_i[24:22]][k][14]) begin
+                    if(~tag_store[addr_i[31:22]][k][14]) begin
                         hit_valid[k] = 1'b1;
                         hit[k] = 1'b0;
                         inval_entry_idx = k;
                         inval_entry[k] = 1'b1;
-		            end else if(tag_store[addr_i[24:22]][k][13:0] == addr_i[21:8]) begin
-                        hit_valid[k] = 1'b1;
-		                hit[k] = 1'b1;
-		                hit_idx = k;
-		            end else begin
-		    	        hit[k] = 1'b0;
-		                hit_valid[k] = 1'b1;
-		            end
+		    end else if(tag_store[addr_i[31:22]][k][13:0] == addr_i[21:8]) begin
+			data_o = data_store[addr_i[31:22]][k];
+			hit_valid[k] = 1'b1;
+		        hit[k] = 1'b1;
+		        hit_idx = k;
+		    end else begin
+		    	hit[k] = 1'b0;
+		        hit_valid[k] = 1'b1;
+		    end
                 end // for (int k = 0; k < associativity; k++)
             end
 	    end // always_ff @ (posedge clk_i)
