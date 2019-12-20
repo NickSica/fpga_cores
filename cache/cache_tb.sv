@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module Cache_TB();
+module cache_tb();
     logic en = 1'b1;
     logic rst = 1'b1;
     logic clk = 1'b0;
@@ -26,5 +26,5 @@ module Cache_TB();
 	#2 addr = 32'b10100000000;
 	#2 addr = 32'b11000000000;
     end    
-endmodule // Cache_TB
+endmodule: cache_tb
 

@@ -4,12 +4,14 @@ tb_script = waveform.tcl
 constr = ./V707/constraints.xdc
 
 
-VLOG_LRU_SRC_FILES = LRU.sv \
-		 LRU_tb.sv
+VLOG_LRU_SRC_FILES = cache_pkg.pkg.sv \
+		     lru_replacement.sv \
+		     lru_tb.sv
 
-VLOG_SRC_FILES = LRU.sv \
-		 Cache.sv \
-		 Cache_TB.sv
+VLOG_SRC_FILES = cache_pkg.pkg.sv \
+		 lru_replacement.sv \
+		 data_cache.sv \
+		 data_cache_tb.sv
 
 .PHONY: build clean
 
@@ -18,11 +20,11 @@ build:
 
 test:
 	vlog -sv $(VLOG_SRC_FILES)
-	vsim -do cache_wave.do -do "run 30ns" Cache_TB
+	vsim -do cache_wave.do -do "run 30ns" data_cache_tb
 
 lru:
 	vlog -sv $(VLOG_LRU_SRC_FILES)
-	vsim LRU_tb
+	vsim lru_tb
 
 clean: 
 	-rm -r build

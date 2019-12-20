@@ -18,7 +18,7 @@
 *********************************************************************************/
 `timescale 1ns / 1ps
 
-module LRU_tb ();
+module lru_tb ();
     logic clk = 1'b0;
     logic hit = 1'b0;
     logic hit_valid = 1'b0;
@@ -41,4 +41,4 @@ module LRU_tb ();
 	#2 hit = 1'b0;
     end
     
-endmodule: LRU_tb
+endmodule: lru_tb
