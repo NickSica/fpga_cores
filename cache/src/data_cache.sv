@@ -32,12 +32,12 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
     logic [4:0][7:0][7:0] ram [0:4095];
     //logic [32:0] 				      ram_data, r_data;
 
-    logic [associativity-1:0] hit = {associativity{1'b0}};
-    logic [associativity-1:0] hit_valid = {associativity{1'b0}};
-    logic [IDX_WID:0] 	      hit_idx = {IDX_WID+1{1'b0}};
-    logic [associativity-1:0] inval_entry = {associativity{1'b0}};
-    logic [IDX_WID:0] 	      inval_entry_idx = {IDX_WID+1{1'b0}};
-    logic [IDX_WID-1:0]       rd_idx;
+    logic [cache_size-1:0][associativity-1:0] hit = {cache_size{ {associativity{1'b0}} }};
+    logic [cache_size-1:0][associativity-1:0] hit_valid = {cache_size{ {associativity{1'b0}} }};
+    logic [cache_size-1:0][IDX_WID:0] 	      hit_idx = {cache_size{ {IDX_WID+1{1'b0}}}};
+    logic [cache_size-1:0][associativity-1:0] inval_entry = {cache_size{ {associativity{1'b0}} }};
+    logic [cache_size-1:0][IDX_WID:0] 	      inval_entry_idx = {cache_size{ {IDX_WID+1{1'b0}}}};
+    logic [cache_size-1:0][IDX_WID-1:0]       rd_idx;
     
     logic [cache_size-1:0][IDX_WID:0] 	      replace_idx;
     logic [cache_size-1:0] 		      replace_valid;    
@@ -71,60 +71,70 @@ module Cache #(cache_type = 0, cache_size = 1024, associativity = 3, word_num = 
 	    logic [cache_size-1:0][associativity-1:0][4:0][7:0][7:0] data_store = {cache_size{ {associativity{ {word_wid{1'b0}} }} }};
 	    
 	    for(i = 0; i < cache_size; i++) begin: g_lru
-		    LRU #(cache_type, cache_size, associativity, word_wid) lru(.clk_i, .en_i((addr_i[31:22] == i) && rd_en_i), .hit_i(|hit), .rst_i, .valid_i(|hit_valid), 
-									       .idx_i(hit_idx), .inval_entry_i(|inval_entry), .inval_entry_idx_i(inval_entry_idx),
-		    						               .valid_o(replace_valid[i]), .idx_o(replace_idx[i]));
+		lru_replacement #(cache_type, cache_size, associativity, word_wid, IDX_WID) lru(.clk_i, .en_i((addr_i[31:22] == i) && rd_en_i), .hit_i(|hit[i]), .rst_i, 
+												.valid_i(|hit_valid[i]), .idx_i(hit_idx[i]),
+												.inval_entry_i(|inval_entry[i]), .inval_entry_idx_i(inval_entry_idx[i]),
+		    										.valid_o(replace_valid[i]), .idx_o(replace_idx[i]));
+		always_ff @(posedge clk_i) begin
+	            if(replace_valid[i][addr_i[31:22]] & rd_en_i) begin
+	    		data_store[addr_i[31:22]][replace_idx[i][addr_i[31:22]]] <= ram[addr_i[31:8]];
+	    		tag_store[addr_i[31:22]][replace_idx[i][addr_i[31:22]]] <= {1'b1, addr_i[21:8]};
+	            end
+
+		    shift_reg_en <= rd_en_i & 1'b1;		    
+		end
+
+		always_comb begin
+		    if((|hit[i] | replace_valid[i][addr_i[31:22]]) & rd_en_i) begin
+			if(|hit[i]) begin
+			    rd_idx[i] = hit_idx[i];			
+			end else begin
+			    rd_idx[i] = replace_idx[i][addr_i[31:22]];
+			end
+
+			data_o[7:0] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][0];
+
+			if(addr_i[0]) begin
+			    data_o[15:8] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][1];			
+			end else begin
+			    data_o[15:8] = 8'b0;			    
+			end
+			
+			
+			if(addr_i[0]) begin
+			    data_o[31:16] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][3:2];			
+			end else begin
+			    data_o[31:16] = 16'b0;			    
+			end
+
+			if(addr_i[0] & addr_i[1]) begin
+			    data_o[63:32] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][7:4];			
+			end else begin
+			    data_o[63:32] = 32'b0;			    
+			end
+		    end else begin // if ((|hit | replace_valid[addr_i[31:22]]) & rd_en_i)
+			data_o = 63'b0;
+			rd_idx[i] = {IDX_WID{1'b0}};			
+		    end // else: !if((|hit[i] | replace_valid[i][addr_i[31:22]]) & rd_en_i)		    
+		end // always_comb
 	    end // block: g_lru
-
-	    always_ff @(posedge clk_i) begin
-	        if(replace_valid[addr_i[31:22]] & rd_en_i) begin
-	    	    data_store[addr_i[31:22]][replace_idx[addr_i[31:22]]] <= ram[addr_i[31:8]];
-	    	    tag_store[addr_i[31:22]][replace_idx[addr_i[31:22]]] <= {1'b1, addr_i[21:8]};
-	        end
-	    end
-
 	
-	    always_latch begin
-		if((|hit | replace_valid[addr_i[31:22]]) & rd_en_i) begin
-		    if(|hit) begin
-			rd_idx = hit_idx;			
-		    end else begin
-			rd_idx = replace_idx[addr_i[31:22]];
-		    end
-
-		    data_o = 64'b0;		    		    
-		    data_o[7:0] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][0];
-
-		    if(addr_i[0]) begin
-			data_o[15:8] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][1];			
-		    end
-		    
-		    if(addr_i[0]) begin
-			data_o[31:16] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][3:2];			
-		    end
-
-		    if(addr_i[0] & addr_i[1]) begin
-			data_o[63:32] = data_store[addr_i[31:22]][rd_idx][addr_i[7:3]][7:4];			
-		    end
-		end		
-	    end
-	
-	    always_latch begin
+	    always_comb begin
 		inval_entry = {associativity{1'b0}};
 		if(rd_en_i) begin
                     for(logic[IDX_WID-1:0] k = 0; k < associativity; k++) begin
 			if(~tag_store[addr_i[31:22]][k][14]) begin
-                            hit_valid[k] = 1'b1;
-                            hit[k] = 1'b0;
-                            inval_entry_idx = k;
-                            inval_entry[k] = 1'b1;
+                            hit_valid[i][k] = 1'b1;
+                            hit[i][k] = 1'b0;
+                            inval_entry_idx[i] = k;
+                            inval_entry[i][k] = 1'b1;
 			end else if(tag_store[addr_i[31:22]][k][13:0] == addr_i[21:8]) begin
-			    hit_valid[k] = 1'b1;
-		            hit[k] = 1'b1;
-		            hit_idx = k;
+			    hit_valid[i][k] = 1'b1;
+		            hit[i][k] = 1'b1;
+		            hit_idx[i] = k;
 			end else begin
-		    	    hit[k] = 1'b0;
-		            hit_valid[k] = 1'b1;
+		    	    hit[i][k] = 1'b0;
+		            hit_valid[i][k] = 1'b1;
 			end
                     end // for (int k = 0; k < associativity; k++)
 		end
