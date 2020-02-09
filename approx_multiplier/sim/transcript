@@ -1,0 +1,56 @@
+# vsim -do "wave.do" -do "run -all" "+nowarn3691" approx_multiplier_4x4_tb 
+# Start time: 19:39:45 on Feb 07,2020
+# Loading sv_std.std
+# Loading work.approx_multiplier_4x4_tb
+# Loading work.approx_multiplier_4x4
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 18
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 29
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 39
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 49
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 59
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 70
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 80
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 90
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 101
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 112
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6_2' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 123
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# ** Error: (vsim-3033) Instantiation of 'LUT6' failed. The design unit was not found.
+#    Time: 0 fs  Iteration: 0  Instance: /approx_multiplier_4x4_tb/approx_mult File: /home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv Line: 134
+#         Searched libraries:
+#             /home/nick/fpga_cores/approx_multiplier/sim/work
+# Error loading design
+# End time: 19:39:45 on Feb 07,2020, Elapsed time: 0:00:00
+# Errors: 12, Warnings: 0

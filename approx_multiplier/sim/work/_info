@@ -1,0 +1,59 @@
+m255
+K4
+z2
+!s11f MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/nick/fpga_cores/approx_multiplier/sim
+vapprox_multiplier_4x4
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1581122379
+!i10b 1
+!s100 T^l_M]?_JO3mL4^YHZ5671
+!s11b 0F=OL8ci`bczfRAe^[N9i3
+IHC?49@9IJVcIN@4Xl6bBL1
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1581122377
+8/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv
+F/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv
+L0 1
+Z4 OV;L;2019.2;69
+r1
+!s85 0
+31
+Z5 !s108 1581122379.000000
+!s107 /home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv|/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv|
+Z6 !s90 -sv|/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv|/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv|
+!i113 1
+o-sv
+Z7 tCvgOpt 0
+vapprox_multiplier_4x4_tb
+R1
+R2
+!i10b 1
+!s100 K6??>F;CL@<YlIl4R=93Z2
+!s11b I76Z[Wb[<o=0Cjjd^zG1k3
+IKgZecVWndW1<k96f7h:;L3
+R3
+S1
+R0
+w1581117937
+8/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv
+F/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+Z8 !s107 /home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv|/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv|
+R6
+!i113 1
+o-sv
+R7
