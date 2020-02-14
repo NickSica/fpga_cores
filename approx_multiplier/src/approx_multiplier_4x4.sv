@@ -10,10 +10,10 @@ module approx_multiplier_4x4 (
 					      64'h5FA05FA088888888, 
 					      64'h007F7F80FF808000,
 					      64'h6666666688888880 };
-    logic [5:0] partial_prod_0 = 6'b0;
-    logic [5:0] partial_prod_1 = 6'b0;
-    logic [3:0] carry_gen      = 4'b0;
-    logic [3:0] prop 	       = 4'b0;
+    logic [5:0] partial_prod_0;
+    logic [5:0] partial_prod_1;
+    logic [3:0] carry_gen;
+    logic [3:0] prop;
    
     LUT6_2 #(.INIT(C_INIT_VALUES[0])) lut0 (
 	    .I0(a_i[0]),
@@ -21,7 +21,7 @@ module approx_multiplier_4x4 (
 	    .I2(a_i[2]),
 	    .I3(b_i[0]),
 	    .I4(b_i[1]),
-	    .I5(1),
+	    .I5(1'b1),
 	    .O5(partial_prod_0[1]),
 	    .O6(partial_prod_0[2])
     );
@@ -62,7 +62,7 @@ module approx_multiplier_4x4 (
 	    .I2(a_i[2]),
 	    .I3(b_i[2]),
 	    .I4(b_i[3]),
-	    .I5(1),
+	    .I5(1'b1),
 	    .O5(partial_prod_1[1]),
 	    .O6(partial_prod_1[2])
     );
@@ -92,8 +92,8 @@ module approx_multiplier_4x4 (
 	    .I1(b_i[0]),
 	    .I2(b_i[2]),
 	    .I3(partial_prod_0[2]),
-	    .I4(1),
-	    .I5(1),
+	    .I4(1'b1),
+	    .I5(1'b1),
 	    .O5(product_o[0]),
 	    .O6(product_o[2])
     );
@@ -104,7 +104,7 @@ module approx_multiplier_4x4 (
 	    .I2(b_i[2]),
 	    .I3(partial_prod_0[3]),
 	    .I4(partial_prod_1[1]),
-	    .I5(1),
+	    .I5(1'b1),
 	    .O5(carry_gen[0]),
 	    .O6(prop[0])
     );
@@ -112,10 +112,10 @@ module approx_multiplier_4x4 (
     LUT6_2 #(.INIT(C_INIT_VALUES[6])) lut9 (
 	    .I0(partial_prod_0[4]),
 	    .I1(partial_prod_1[2]),
-	    .I2(1),
-	    .I3(1),
-	    .I4(1),
-	    .I5(1), 
+	    .I2(1'b1),
+	    .I3(1'b1),
+	    .I4(1'b1),
+	    .I5(1'b1), 
   	    .O5(carry_gen[1]),
 	    .O6(prop[1])
     );
@@ -123,10 +123,10 @@ module approx_multiplier_4x4 (
     LUT6_2 #(.INIT(C_INIT_VALUES[6])) lut10 (
 	    .I0(partial_prod_0[5]),
 	    .I1(partial_prod_1[3]),
-	    .I2(1),
-	    .I3(1),
-	    .I4(1),
-	    .I5(1),
+	    .I2(1'b1),
+	    .I3(1'b1),
+	    .I4(1'b1),
+	    .I5(1'b1),
 	    .O5(carry_gen[2]),
 	    .O6(prop[2])
     );
@@ -141,11 +141,12 @@ module approx_multiplier_4x4 (
 	    .O(prop[3])
     );
 
-    always product_o[0] <= partial_prod_0[1];
+    //always product_o[0] <= partial_prod_0[1];
 
     genvar i;
     generate
-	for(i = 2; i <= 5; i++) begin : g_prod_low
+	// used to be i = 2
+	for(i = 3; i <= 5; i++) begin : g_prod_low
 	    always product_o[i] <= partial_prod_0[i] + partial_prod_1[i - 2];
 	end
 

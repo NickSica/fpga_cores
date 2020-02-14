@@ -1,0 +1,10 @@
+# Current time Fri Feb 14 16:59:07 2020
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2019.2"
+# Version = "2019.04"
+# Date = "Apr 17 2019"
+# Platform = "linuxpe"
+# 0    0xf7fd2b49: '<unknown (@0xf7fd2b49)>'
+# 1    0x00001a83: '<unknown (@0x1a83)>'
+# 2    0xfffffffd: '<unknown (@0xfffffffd)>'
