@@ -15,12 +15,13 @@ module approx_multiplier_4x4_tb ();
 	    #100 multiplier   <= i;
 	    multiplicand <= i;
 	end
-	#300 $finish;
+	#300 $stop;
 	
      end
 
     approx_multiplier_4x4 approx_mult(
-        .a_i(multiplier),
+        .clk_i(clk),
+	.a_i(multiplier),
         .b_i(multiplicand),
         .product_o(product)
     );

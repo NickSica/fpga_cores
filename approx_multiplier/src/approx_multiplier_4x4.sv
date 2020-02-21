@@ -1,4 +1,5 @@
 module approx_multiplier_4x4 (
+	input logic       clk_i,
 	input logic [3:0] a_i,
 	input logic [3:0] b_i,
 	output logic [7:0] product_o
@@ -10,10 +11,12 @@ module approx_multiplier_4x4 (
 					      64'h5FA05FA088888888, 
 					      64'h007F7F80FF808000,
 					      64'h6666666688888880 };
-    logic [5:0] partial_prod_0;
-    logic [5:0] partial_prod_1;
-    logic [3:0] carry_gen;
-    logic [3:0] prop;
+    logic 		    prod_0;
+    logic 		    prod_2;
+    logic [5:0] 	    partial_prod_0;
+    logic [5:0] 	    partial_prod_1;
+    logic [3:0] 	    carry_gen;
+    logic [3:0] 	    prop;
    
     LUT6_2 #(.INIT(C_INIT_VALUES[0])) lut0 (
 	    .I0(a_i[0]),
@@ -94,8 +97,8 @@ module approx_multiplier_4x4 (
 	    .I3(partial_prod_0[2]),
 	    .I4(1'b1),
 	    .I5(1'b1),
-	    .O5(product_o[0]),
-	    .O6(product_o[2])
+	    .O5(prod_0),
+	    .O6(prod_2)
     );
 
     LUT6_2 #(.INIT(C_INIT_VALUES[5])) lut8 (
@@ -141,19 +144,21 @@ module approx_multiplier_4x4 (
 	    .O(prop[3])
     );
 
-    //always product_o[0] <= partial_prod_0[1];
-
-    genvar i;
-    generate
-	// used to be i = 2
-	for(i = 3; i <= 5; i++) begin : g_prod_low
-	    always product_o[i] <= partial_prod_0[i] + partial_prod_1[i - 2];
+    always_ff @(posedge clk_i)
+    p_assign_products : begin
+	product_o[0] <= prod_0;
+	product_o[1] <= partial_prod_0[1];
+	product_o[2] <= prod_2;	
+	
+    	// used to be i = 2
+        for(int i = 3; i <= 5; i++) begin 
+	    product_o[i] <= partial_prod_0[i] + partial_prod_1[i - 2];
+        end
+	
+	for(int i = 6; i <= 7; i++) begin
+            product_o[i] <= partial_prod_1[i - 2];
 	end
-
-	for(i = 6; i <= 7; i++) begin : g_prod_high
-	    always product_o[i] <= partial_prod_1[i - 2];
-	end
-    endgenerate
+    end
 
 endmodule: approx_multiplier_4x4
 

@@ -11,15 +11,15 @@ cModel Technology
 Z0 d/home/nick/fpga_cores/approx_multiplier/sim
 vapprox_multiplier_4x4
 Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1581720572
+Z2 !s110 1582324371
 !i10b 1
-!s100 Z:T=8]XT6DZY><RBi]2hd3
-!s11b fKe<4Sl8>Z?fnZQEXPn9f2
-IXRAiFOaM2AC2:3_;[SOMR0
+!s100 X?FZ0z0CF62jXo@ozGd0=0
+!s11b @QN3=<YNE^7P>JOY4fSod0
+IPGC^IE2HzG7]8;AEJ@nkN1
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 S1
 R0
-w1581720324
+w1582324367
 8/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv
 F/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv
 L0 1
@@ -27,7 +27,7 @@ Z4 OV;L;2019.2;69
 r1
 !s85 0
 31
-Z5 !s108 1581720571.000000
+Z5 !s108 1582324370.000000
 !s107 /home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv|/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv|
 Z6 !s90 -L|unisims_ver|-sv|/home/nick/fpga_cores/approx_multiplier/src/approx_multiplier_4x4.sv|/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv|
 !i113 1
@@ -37,13 +37,13 @@ vapprox_multiplier_4x4_tb
 R1
 R2
 !i10b 1
-!s100 :LhL>:=O=Y8?fK@oX]M;a2
-!s11b 3VeE]3GOeCi6Cz>zOPfCA0
-IfWgJOYYQGRnHJGheRT1WF2
+!s100 nS<k`gg744g==>5IfY^Og2
+!s11b l3TgJ=N7k>>KZzWHIgj4>2
+I_@6@2eXf8lFP`>l^3F:MC3
 R3
 S1
 R0
-w1581720466
+w1582324233
 8/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv
 F/home/nick/fpga_cores/approx_multiplier/sim/approx_multiplier_4x4_tb.sv
 L0 3
