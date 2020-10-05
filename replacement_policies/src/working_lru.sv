@@ -19,19 +19,19 @@
 
 module lru #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64, idx_wid = 3)
     (input logic clk_i, hit_i, valid_i,
-     input logic [idx_wid-1:0] 	idx_i,
-     output logic 		valid_o,
+     input logic [idx_wid-1:0]  idx_i,
+     output logic     valid_o,
      output logic [idx_wid-1:0] idx_o);
 
     //parameter idx_bits = $clog2(cache_size);
     logic [associativity-1:0][idx_wid:0] lru_shift_registers = {associativity{ {(idx_wid + 1){1'b0}} }};  // top bit is a valid bit to make sure the data is valid
-    logic [associativity-1:0] 		 reg_equals_idx;
-    logic [associativity-1:0] 		 shift_reg_en;
+    logic [associativity-1:0]      reg_equals_idx;
+    logic [associativity-1:0]      shift_reg_en;
 
     always_comb begin
-	for(int i = associativity-1; i >= 0; i--) begin
-	    reg_equals_idx[i] = (idx_i != lru_shift_registers[i][idx_wid-1:0]) & valid_i;
-	end
+  for(int i = associativity-1; i >= 0; i--) begin
+      reg_equals_idx[i] = (idx_i != lru_shift_registers[i][idx_wid-1:0]) & valid_i;
+  end
     end
 
     always_comb begin
@@ -42,19 +42,19 @@ module lru #(cache_type = 0, cache_size = 1024, associativity = 3, word_wid = 64
     end
 
     always_comb begin
-	valid_o = 1'b0;
-	valid_o = ~hit_i & lru_shift_registers[0][idx_wid] & valid_i;
+  valid_o = 1'b0;
+  valid_o = ~hit_i & lru_shift_registers[0][idx_wid] & valid_i;
     end
     
     always_ff @(posedge clk_i) begin
-	idx_o <= lru_shift_registers[0][idx_wid-1:0];
-	lru_shift_registers[associativity-1] <= {1'b1, idx_i};
-	
-	for(int j = 0; j < associativity-1; j++) begin
-	    if(shift_reg_en[j+1]) begin
-		lru_shift_registers[j] <= lru_shift_registers[j+1];
-	    end	    
-	end   
+  idx_o <= lru_shift_registers[0][idx_wid-1:0];
+  lru_shift_registers[associativity-1] <= {1'b1, idx_i};
+  
+  for(int j = 0; j < associativity-1; j++) begin
+      if(shift_reg_en[j+1]) begin
+    lru_shift_registers[j] <= lru_shift_registers[j+1];
+      end     
+  end   
     end // always_ff @ (posedge clk_i)
 endmodule: lru
 

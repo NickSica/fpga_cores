@@ -11,9 +11,9 @@ int prev_winners[$];
 int PORT_MAP [`NOC_NPS_NUM_PORT];
 int PORT_UNMAP [`NOC_NPS_NUM_PORT-1];
 
-//logic [num_requestors*(num_requestors-1)/2 : 1]	 aom;
+//logic [num_requestors*(num_requestors-1)/2 : 1]  aom;
 `define NUMREQ 24
-bit [`NUMREQ*(`NUMREQ-1)/2 : 1]	 aom;
+bit [`NUMREQ*(`NUMREQ-1)/2 : 1]  aom;
 
 function new(int port_num, int num, int port_map [`NOC_NPS_NUM_PORT], int port_unmap [`NOC_NPS_NUM_PORT-1], int verbosity_en);
   outport_num = port_num;
@@ -80,12 +80,12 @@ function void index_aom(int insert_index);
   int insert_index_mapped = PORT_MAP[insert_index/`NOC_NPS_NUM_VC]*`NOC_NPS_NUM_VC+ insert_index%`NOC_NPS_NUM_VC;
   if(insert_index_mapped != -1) begin
       for (y=0; y<(`NUMREQ-1); y++) begin
-	 for (x=1; x<`NUMREQ; x++) begin
-	    if ((y<insert_index_mapped) && (x==insert_index_mapped))
-	      aom[((`NUMREQ-1)+(`NUMREQ-y))*y/2+(x-y)] = 1'b1;
-	    else if ((y==insert_index_mapped) && (x>insert_index_mapped))
-	      aom[((`NUMREQ-1)+(`NUMREQ-y))*y/2+(x-y)] = 1'b0;
-	 end
+   for (x=1; x<`NUMREQ; x++) begin
+      if ((y<insert_index_mapped) && (x==insert_index_mapped))
+        aom[((`NUMREQ-1)+(`NUMREQ-y))*y/2+(x-y)] = 1'b1;
+      else if ((y==insert_index_mapped) && (x>insert_index_mapped))
+        aom[((`NUMREQ-1)+(`NUMREQ-y))*y/2+(x-y)] = 1'b0;
+   end
       end
       `PRINT_MODEL(VERBOSITY_EN,$sformatf("ipa outport_num = %0h : insert_index=%0h insert_index_mapped=%0h AOM is =%0h",outport_num,insert_index,insert_index_mapped,aom),DBG)
   end
@@ -219,7 +219,7 @@ function arb();
        if(p != outport_num) begin //(i/`NOC_NPS_NUM_VC) = port
         for(int vc=0;vc<`NOC_NPS_NUM_VC;vc++) begin
           if(tokens[p*`NOC_NPS_NUM_VC + vc] < 0) tokens[p*`NOC_NPS_NUM_VC + vc] = p_nps_reg.reg_vca_token[p][outport_num][vc] -1;
-	  else tokens[p*`NOC_NPS_NUM_VC + vc] = p_nps_reg.reg_vca_token[p][outport_num][vc];
+    else tokens[p*`NOC_NPS_NUM_VC + vc] = p_nps_reg.reg_vca_token[p][outport_num][vc];
           `PRINT_MODEL(VERBOSITY_EN,$sformatf("ipa outport_num = %0h : reloading tokens. port=%0h vc=%0h tokens=%0h",outport_num,p, vc,tokens[p*`NOC_NPS_NUM_VC + vc]),DBG)
         end
        end

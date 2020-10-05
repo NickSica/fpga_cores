@@ -18,10 +18,10 @@
 *********************************************************************************/
 
 module i2c (
-	    input logic clk_i,
-	    input logic addr_i [6:0],
-	    output
-	   );
+      input logic clk_i,
+      input logic addr_i [6:0],
+      output
+     );
 
     // Start condition
     

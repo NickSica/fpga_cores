@@ -31,14 +31,14 @@ module lru_tb ();
     LRU lru(.clk_i(clk), .hit_i(hit), .valid_i(hit_valid), .idx_i(hit_idx), .valid_o(replace_valid), .idx_o(replace_idx));
 
     initial begin
-	hit = 1'b1;
-	hit_valid = 1'b1;
-	hit_idx = 0;
-	#2 hit_idx = 10'b0000000001;
-	#2 hit_idx = 10'b0000000011;
-	#2 hit_idx = 10'b0000000111;
-	#2 hit_idx = 10'b0000000011;
-	#2 hit = 1'b0;
+  hit = 1'b1;
+  hit_valid = 1'b1;
+  hit_idx = 0;
+  #2 hit_idx = 10'b0000000001;
+  #2 hit_idx = 10'b0000000011;
+  #2 hit_idx = 10'b0000000111;
+  #2 hit_idx = 10'b0000000011;
+  #2 hit = 1'b0;
     end
     
 endmodule: lru_tb

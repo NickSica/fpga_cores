@@ -16,13 +16,13 @@
                axi_ace_awuser_width,
                axi_ace_aruser_width,
                axi_ace_ruser_width,
-			   axi_ace_wuser_width,
+         axi_ace_wuser_width,
                axi_ace_buser_width,
                axi_ace_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_ace_wr_outstanding,
                axi_ace_rd_outstanding,
-			   axi_ace_region_width)
+         axi_ace_region_width)
   S_AXI_ACE (.S_RESETN           (net_s_axi_ace_rstn),
             .S_ACLK             (PLACECLK),
             // Write Address Channel
@@ -75,12 +75,12 @@
             .S_BUSER            (SACEFPDBUSER),
             .S_ARUSER           (SACEFPDARUSER),
             .S_RUSER            (SACEFPDRUSER),
-			.SW_CLK             (net_sw_clk),
+      .SW_CLK             (net_sw_clk),
 /* This goes to DDR, OCM and REG*/
             .WR_DATA_ACK_DDR    (ddr_wr_ack_ace),
             .WR_DATA_ACK_OCM    (ocm_wr_ack_ace),
             .WR_DATA            (net_wr_data_ace), 
-			.WR_DATA_STRB       (net_wr_strb_ace),
+      .WR_DATA_STRB       (net_wr_strb_ace),
             .WR_ADDR            (net_wr_addr_ace), 
             .WR_BYTES           (net_wr_bytes_ace), 
             .WR_DATA_VALID_DDR  (ddr_wr_dv_ace), 
