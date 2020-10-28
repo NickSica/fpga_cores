@@ -123,7 +123,7 @@ module tcp_disassembler (
       end
 
       SRC_PORT : begin
-  src_port_r[counter_v] <= data_i;
+	src_port_r[counter_v] <= data_i;
         if (counter_v == $bits(src_port_r) - 1) begin
           parser_state_r     <= DST_PORT;
           counter_v          <= 0;
@@ -143,7 +143,7 @@ module tcp_disassembler (
       end
 
       SEQ_NUM : begin
-  seq_num_r[counter_v] <= data_i;
+	seq_num_r[counter_v] <= data_i;
         if (counter_v == $bits(seq_num_r) - 1) begin
           parser_state_r     <= ACK_NUM;
           counter_v          <= 0;
@@ -163,7 +163,7 @@ module tcp_disassembler (
       end
 
       DATA_OFFSET : begin
-  data_offset_r[counter_v] <= data_i;
+	data_offset_r[counter_v] <= data_i;
         if (counter_v == $bits(data_offset_r) - 1) begin
           parser_state_r     <= RESERVED;
           counter_v          <= 0;
@@ -173,7 +173,7 @@ module tcp_disassembler (
       end
 
       RESERVED : begin
-  reserved_r[counter_v] <= data_i;
+	reserved_r[counter_v] <= data_i;
         if (counter_v == $bits(reserved_r) - 1) begin
           parser_state_r     <= FLAGS;
           counter_v          <= 0;
@@ -183,7 +183,7 @@ module tcp_disassembler (
       end
 
       FLAGS : begin
-  flags_r[counter_v] <= data_i;
+	flags_r[counter_v] <= data_i;
         if (counter_v == $bits(flags_r) - 1) begin
           parser_state_r     <= WINDOW_SIZE;
           counter_v          <= 0;
@@ -193,7 +193,7 @@ module tcp_disassembler (
       end
 
       WINDOW_SIZE : begin
-  win_size_r[counter_v] <= data_i;
+	win_size_r[counter_v] <= data_i;
         if (counter_v == $bits(win_size_r) - 1) begin
           parser_state_r     <= CHECKSUM;
           counter_v          <= 0;
@@ -203,7 +203,7 @@ module tcp_disassembler (
       end
 
       CHECKSUM : begin
-  chksum_r[counter_v] <= data_i;
+	chksum_r[counter_v] <= data_i;
         if (counter_v == $bits(chksum_r) - 1) begin
           parser_state_r    <= URG_PTR;
           counter_v         <= 0;
@@ -213,7 +213,7 @@ module tcp_disassembler (
       end
 
       URG_PTR : begin
-  urg_ptr_r[counter_v] <= data_i;
+	urg_ptr_r[counter_v] <= data_i;
         if (counter_v == $bits(urg_ptr_r) - 1) begin
           parser_state_r     <= DATA;
           counter_v          <= 0;
@@ -224,7 +224,7 @@ module tcp_disassembler (
 
       // TODO : Decide how to deal with data
       DATA : begin
-  tcp_len_r[counter_v] <= data_i;
+	tcp_len_r[counter_v] <= data_i;
         if (counter_v == $bits(tcp_len_r) - 1) begin
           parser_state_r     <= IDLE;
           counter_v          <= 0;

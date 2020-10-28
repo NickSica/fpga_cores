@@ -49,7 +49,7 @@
             EMIOENET0TXRVALID or
             EMIOGEM0TSUINCCTRL)
     begin
-    if (EMIOENETTSUCLK |
+	  if (EMIOENETTSUCLK |
           EMIOENET0GMIICOL |
           EMIOENET0GMIICRS |
           EMIOENET0GMIIRXCLK |
@@ -70,7 +70,7 @@
           EMIOENET0TXRVALID |
           EMIOGEM0TSUINCCTRL)
         $display("[%0d] : %0s : GEM Interface is not supported.",$time, DISP_ERR);
-  end
+	end
 
    assign EMIOENET0DMABUSWIDTH = 0;
    assign EMIOENET0DMATXENDTOG = 0;
@@ -125,7 +125,7 @@
             EMIOENET1TXRVALID or
             EMIOGEM1TSUINCCTRL)
     begin
-    if (EMIOENETTSUCLK |
+	  if (EMIOENETTSUCLK |
           EMIOENET1GMIICOL |
           EMIOENET1GMIICRS |
           EMIOENET1GMIIRXCLK |
@@ -146,7 +146,7 @@
           EMIOENET1TXRVALID |
           EMIOGEM1TSUINCCTRL)
         $display("[%0d] : %0s : GEM Interface is not supported.",$time, DISP_ERR);
-  end
+	end
 
    assign EMIOENET1DMABUSWIDTH = 0;
    assign EMIOENET1DMATXENDTOG = 0;
@@ -200,7 +200,7 @@
             EMIOENET2TXRVALID or
             EMIOGEM2TSUINCCTRL)
     begin
-    if (EMIOENETTSUCLK |
+	  if (EMIOENETTSUCLK |
           EMIOENET2GMIICOL |
           EMIOENET2GMIICRS |
           EMIOENET2GMIIRXCLK |
@@ -221,7 +221,7 @@
           EMIOENET2TXRVALID |
           EMIOGEM2TSUINCCTRL)
         $display("[%0d] : %0s : GEM Interface is not supported.",$time, DISP_ERR);
-  end
+	end
 
    assign EMIOENET2DMABUSWIDTH = 0;
    assign EMIOENET2DMATXENDTOG = 0;
@@ -275,7 +275,7 @@
             EMIOENET3TXRVALID or
             EMIOGEM3TSUINCCTRL)
     begin
-    if (EMIOENETTSUCLK |
+	  if (EMIOENETTSUCLK |
           EMIOENET3GMIICOL |
           EMIOENET3GMIICRS |
           EMIOENET3GMIIRXCLK |
@@ -296,7 +296,7 @@
           EMIOENET3TXRVALID |
           EMIOGEM3TSUINCCTRL)
         $display("[%0d] : %0s : GEM Interface is not supported.",$time, DISP_ERR);
-  end
+	end
 
    assign EMIOENET3DMABUSWIDTH = 0;
    assign EMIOENET3DMATXENDTOG = 0;
@@ -331,9 +331,9 @@
 
    always @(EMIOGPIOI)
      begin
-     if(EMIOGPIOI)
+	   if(EMIOGPIOI)
         $display("[%0d] : %0s : GPIO Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOGPIOO = 0;
    assign EMIOGPIOTN = 0;
@@ -347,28 +347,28 @@
             EMIOU3DSPORTVBUSCTRLUSB30 or
             EMIOU3DSPORTVBUSCTRLUSB31)
      begin
-     if(EMIOHUBPORTOVERCRNTUSB20 |
+	   if(EMIOHUBPORTOVERCRNTUSB20 |
           EMIOHUBPORTOVERCRNTUSB21 |
           EMIOHUBPORTOVERCRNTUSB30 |
           EMIOHUBPORTOVERCRNTUSB31 |
-      EMIOU2DSPORTVBUSCTRLUSB30 | 
+		  EMIOU2DSPORTVBUSCTRLUSB30 | 
           EMIOU2DSPORTVBUSCTRLUSB31 |
           EMIOU3DSPORTVBUSCTRLUSB30 |
           EMIOU3DSPORTVBUSCTRLUSB31)
          $display("[%0d] : %0s : USB Interface is not supported.",$time, DISP_ERR);
-   end
-  
+	 end
+	
     always @(EMIOI2C0SCLI or
              EMIOI2C0SDAI or
              EMIOI2C1SCLI or
              EMIOI2C1SDAI)
-    begin
+	  begin
         if(EMIOI2C0SCLI |
            EMIOI2C0SDAI |
            EMIOI2C1SCLI |
            EMIOI2C1SDAI)
          $display("[%0d] : %0s : I2C Interface is not supported.",$time, DISP_ERR);
-    end
+	  end
 
    assign EMIOI2C0SCLO = 0;
    assign EMIOI2C0SCLTN = 0;
@@ -390,7 +390,7 @@
             EMIOSDIO1FBCLKIN or
             EMIOSDIO1WP)
      begin
-     if(EMIOSDIO0CDN |
+	   if(EMIOSDIO0CDN |
           EMIOSDIO0CMDIN |
           EMIOSDIO0DATAIN |
           EMIOSDIO0FBCLKIN |
@@ -401,7 +401,7 @@
           EMIOSDIO1FBCLKIN |
           EMIOSDIO1WP)
          $display("[%0d] : %0s : SDIO Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOSDIO0BUSPOWER = 0;
    assign EMIOSDIO0BUSVOLT = 0;
@@ -438,7 +438,7 @@
          EMIOSPI1SI |
          EMIOSPI1SSIN)
         $display("[%0d] : %0s : SPI Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOSPI0MO = 0;
    assign EMIOSPI0MOTN = 0;
@@ -462,12 +462,12 @@
             EMIOTTC2CLKI or
             EMIOTTC3CLKI)
      begin
-     if(EMIOTTC0CLKI |
+	   if(EMIOTTC0CLKI |
           EMIOTTC1CLKI |
           EMIOTTC2CLKI |
           EMIOTTC3CLKI)
         $display("[%0d] : %0s : TTC Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOTTC0WAVEO = 0;
    assign EMIOTTC1WAVEO = 0;
@@ -485,7 +485,7 @@
             EMIOUART1RIN or
             EMIOUART1RX)
      begin
-     if(EMIOUART0CTSN |
+	   if(EMIOUART0CTSN |
           EMIOUART0DCDN |
           EMIOUART0DSRN |
           EMIOUART0RIN |
@@ -496,7 +496,7 @@
           EMIOUART1RIN |
           EMIOUART1RX)
         $display("[%0d] : %0s : TTC Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOUART0DTRN = 0;
    assign EMIOUART0RTSN = 0;
@@ -508,10 +508,10 @@
    always @(EMIOWDT0CLKI or
             EMIOWDT1CLKI)
      begin
-     if(EMIOWDT0CLKI |
+	   if(EMIOWDT0CLKI |
           EMIOWDT1CLKI)
         $display("[%0d] : %0s : WDT Interface is not supported.",$time, DISP_ERR);
-   end
+	 end
 
    assign EMIOWDT0RSTO = 0;
    assign EMIOWDT1RSTO = 0;

@@ -17,22 +17,22 @@
  * 
 *********************************************************************************/
 typedef enum logic [2:0] {
-        IDLE,
-        SEND_ADDR,
-        ACK_ADDR,
-        DATA_XFER,
-        ACK_DATA,
-        SEND_STOP
-        } states_t;
+			  IDLE,
+			  SEND_ADDR,
+			  ACK_ADDR,
+			  DATA_XFER,
+			  ACK_DATA,
+			  SEND_STOP
+			  } states_t;
 
 module i2c_master (
-       input logic        clk_i, en_i, rw_i, ack_i,
-       input logic [6:0]  addr_i,
-       input logic [7:0]  data_i,
-       output logic       scl_o, ack_o,
-       output logic [7:0] data_o,
-       inout logic        sda_io
-       );
+		   input logic 	      clk_i, en_i, rw_i, ack_i,
+		   input logic [6:0]  addr_i,
+		   input logic [7:0]  data_i,
+		   output logic       scl_o, ack_o,
+		   output logic [7:0] data_o,
+		   inout logic 	      sda_io
+		   );
 
   states_t     i2c_state_c = IDLE;
   logic        scl_r, ack_r, data_rcv_r;
@@ -47,99 +47,99 @@ module i2c_master (
   always_ff @(posedge scl_o)
     begin : sda_ctrl_p
       case(i2c_state_c)
-  IDLE : 
-    if(en_i && sda_io)
-      begin
-        sda_io <= 0;
-        idx <= 0;
-      end;
-  
-  SEND_ADDR :
-    begin
-      sda_io <= rw_addr_c[idx];
-      idx++;
-    end;
+	IDLE : 
+	  if(en_i && sda_io)
+	    begin
+	      sda_io <= 0;
+	      idx <= 0;
+	    end;
+	
+	SEND_ADDR :
+	  begin
+	    sda_io <= rw_addr_c[idx];
+	    idx++;
+	  end;
 
-  ACK_ADDR :
-    begin
-      ack_r <= sda_io;
-      idx <= 0;
-    end;
-    
-  DATA_XFER :
-    begin
-      if(rw_i) // Requesting data from slave
-        begin
-    data_rcv_r[idx] <= sda_io[idx];
-    idx++;
-        end;
-    end;
+	ACK_ADDR :
+	  begin
+	    ack_r <= sda_io;
+	    idx <= 0;
+	  end;
+		
+	DATA_XFER :
+	  begin
+	    if(rw_i) // Requesting data from slave
+	      begin
+		data_rcv_r[idx] <= sda_io[idx];
+		idx++;
+	      end;
+	  end;
 
-  ACK_DATA :
-    begin
-      if(rw_i)
-        begin
-    ack_r <= sda_io;
-    idx <= 0;
-        end;
-    end;
+	ACK_DATA :
+	  begin
+	    if(rw_i)
+	      begin
+		ack_r <= sda_io;
+		idx <= 0;
+	      end;
+	  end;
 
-  SEND_STOP :
-    sda_io <= 1'b1;
+	SEND_STOP :
+	  sda_io <= 1'b1;
       endcase; // case (i2c_state_c)
     end;
 
   always_ff @(negedge scl_o)
     begin : sda_ctrl_falling_p
       case(i2c_state_c)
-  DATA_XFER :
-    begin
-      if(~rw_i) // Sending data to slave
-        begin
-    sda_io[idx] = data_rcv_r[idx];
-    idx++;
-        end;
-    end;
+	DATA_XFER :
+	  begin
+	    if(~rw_i) // Sending data to slave
+	      begin
+		sda_io[idx] = data_rcv_r[idx];
+		idx++;
+	      end;
+	  end;
 
-  ACK_DATA :
-    if(~rw_i)
-      begin
-        sda_io <= 1'b1;
-        ack_r <= 1'b1;
-        idx <= 0;
-      end;
+	ACK_DATA :
+	  if(~rw_i)
+	    begin
+	      sda_io <= 1'b1;
+	      ack_r <= 1'b1;
+	      idx <= 0;
+	    end;
 
-  SEND_STOP :
-    sda_io <= 1'b0;
+	SEND_STOP :
+	  sda_io <= 1'b0;
       endcase; // case (i2c_state_c)
     end;
   
   always_comb
     begin : state_ctrl_p
       case(i2c_state_c)
-  IDLE :
-    if(en_i && sda_io) i2c_state_c = SEND_ADDR;
-  
-  SEND_ADDR :
-    if(idx == 8) i2c_state_c = ACK_ADDR;
-  
-  ACK_ADDR : 
-    if(ack_r) 
-      i2c_state_c = DATA_XFER;
-          else
-      i2c_state_c = SEND_ADDR;
-  
-  DATA_XFER : 
-    if(idx == 8) i2c_state_c = ACK_DATA;
+	IDLE :
+	  if(en_i && sda_io) i2c_state_c = SEND_ADDR;
+	
+	SEND_ADDR :
+	  if(idx == 8) i2c_state_c = ACK_ADDR;
+	
+	ACK_ADDR : 
+	  if(ack_r) 
+	    i2c_state_c = DATA_XFER;
+      	  else
+	    i2c_state_c = SEND_ADDR;
+	
+	DATA_XFER : 
+	  if(idx == 8) i2c_state_c = ACK_DATA;
 
-  ACK_DATA :
-    if(ack_r) 
-      i2c_state_c = SEND_STOP;
-          else
-      i2c_state_c = DATA_XFER;
+	ACK_DATA :
+	  if(ack_r) 
+	    i2c_state_c = SEND_STOP;
+      	  else
+	    i2c_state_c = DATA_XFER;
 
-  SEND_STOP :
-    i2c_state_c = IDLE;
+	SEND_STOP :
+	  i2c_state_c = IDLE;
       endcase; // case(i2c_state_c)
     end; // block: state_ctrl_p
     
@@ -155,15 +155,15 @@ module i2c_master (
       if(i2c_state_c != IDLE && i2c_state_c != SEND_STOP) assert($stable(sda_io));
       
       case(i2c_state_c)
-  IDLE :
-    begin
-      assert($stable(idx));
-    end;
+	IDLE :
+	  begin
+	    assert($stable(idx));
+	  end;
 
-  SEND_ADDR :
-    begin
-      assert(idx >= 0 && counter <= 8);
-    end;
+	SEND_ADDR :
+	  begin
+	    assert(idx >= 0 && counter <= 8);
+	  end;
       endcase; // case (i2c_state_c)
     end; // always @ (posedge scl_o)
 `endif

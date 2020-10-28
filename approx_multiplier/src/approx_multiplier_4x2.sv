@@ -6,8 +6,8 @@ module approx_multiplier_4x2 (
 
     // P1 and P2
     lut6_2 #(
-       .INIT(16'hB4CCF00066AACC00)
-       )
+	     .INIT(16'hB4CCF00066AACC00)
+	     )
     lut_inst1
       (
     .I0(a[0]),

@@ -16,13 +16,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP0(.S_RESETN          (net_s_axi_gp0_rstn),
   S_AXI_HPC0_FPD(.S_RESETN          (net_s_axi_gp0_rstn),
             .S_ACLK            (SAXIGP0WCLK),
@@ -81,7 +81,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp0),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp0),
             .WR_DATA           (net_wr_data_gp0), 
-      .WR_DATA_STRB      (net_wr_strb_gp0),
+			.WR_DATA_STRB      (net_wr_strb_gp0),
             .WR_ADDR           (net_wr_addr_gp0), 
             .WR_BYTES          (net_wr_bytes_gp0), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp0), 
@@ -110,13 +110,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP1(.S_RESETN          (net_s_axi_gp1_rstn),
   S_AXI_HPC1_FPD(.S_RESETN          (net_s_axi_gp1_rstn),
             .S_ACLK            (SAXIGP1WCLK),
@@ -175,7 +175,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp1),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp1),
             .WR_DATA           (net_wr_data_gp1), 
-      .WR_DATA_STRB      (net_wr_strb_gp1),
+			.WR_DATA_STRB      (net_wr_strb_gp1),
             .WR_ADDR           (net_wr_addr_gp1), 
             .WR_BYTES          (net_wr_bytes_gp1), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp1), 
@@ -204,13 +204,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP2(.S_RESETN          (net_s_axi_gp2_rstn),
   S_AXI_HP0_FPD(.S_RESETN          (net_s_axi_gp2_rstn),
             .S_ACLK            (SAXIGP2WCLK),
@@ -269,7 +269,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp2),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp2),
             .WR_DATA           (net_wr_data_gp2), 
-      .WR_DATA_STRB      (net_wr_strb_gp2),
+			.WR_DATA_STRB      (net_wr_strb_gp2),
             .WR_ADDR           (net_wr_addr_gp2), 
             .WR_BYTES          (net_wr_bytes_gp2), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp2), 
@@ -298,13 +298,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP3(.S_RESETN          (net_s_axi_gp3_rstn),
   S_AXI_HP1_FPD(.S_RESETN          (net_s_axi_gp3_rstn),
             .S_ACLK            (SAXIGP3WCLK),
@@ -363,7 +363,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp3),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp3),
             .WR_DATA           (net_wr_data_gp3), 
-      .WR_DATA_STRB      (net_wr_strb_gp3),
+			.WR_DATA_STRB      (net_wr_strb_gp3),
             .WR_ADDR           (net_wr_addr_gp3), 
             .WR_BYTES          (net_wr_bytes_gp3), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp3), 
@@ -392,13 +392,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP4(.S_RESETN          (net_s_axi_gp4_rstn),
   S_AXI_HP2_FPD(.S_RESETN          (net_s_axi_gp4_rstn),
             .S_ACLK            (SAXIGP4WCLK),
@@ -457,7 +457,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp4),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp4),
             .WR_DATA           (net_wr_data_gp4), 
-      .WR_DATA_STRB      (net_wr_strb_gp4),
+			.WR_DATA_STRB      (net_wr_strb_gp4),
             .WR_ADDR           (net_wr_addr_gp4), 
             .WR_BYTES          (net_wr_bytes_gp4), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp4), 
@@ -486,13 +486,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP5(.S_RESETN          (net_s_axi_gp5_rstn),
   S_AXI_HP3_FPD(.S_RESETN          (net_s_axi_gp5_rstn),
             .S_ACLK            (SAXIGP5WCLK),
@@ -551,7 +551,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp5),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp5),
             .WR_DATA           (net_wr_data_gp5), 
-      .WR_DATA_STRB      (net_wr_strb_gp5),
+			.WR_DATA_STRB      (net_wr_strb_gp5),
             .WR_ADDR           (net_wr_addr_gp5), 
             .WR_BYTES          (net_wr_bytes_gp5), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp5), 
@@ -580,13 +580,13 @@
                axi_sgp_awuser_width,
                axi_sgp_aruser_width,
                1,//axi_sgp_ruser_width,
-         1,//axi_sgp_wuser_width,
+			   1,//axi_sgp_wuser_width,
                1,//axi_sgp_buser_width,
                axi_sgp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_sgp_wr_outstanding,
                axi_sgp_rd_outstanding,
-           1)
+   			   1)
   // S_AXI_GP6(.S_RESETN          (net_s_axi_gp6_rstn),
   S_AXI_HPM0_LPD(.S_RESETN          (net_s_axi_gp6_rstn),
             .S_ACLK            (SAXIGP6WCLK),
@@ -645,7 +645,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_gp6),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_gp6),
             .WR_DATA           (net_wr_data_gp6), 
-      .WR_DATA_STRB      (net_wr_strb_gp6),
+			.WR_DATA_STRB      (net_wr_strb_gp6),
             .WR_ADDR           (net_wr_addr_gp6), 
             .WR_BYTES          (net_wr_bytes_gp6), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_gp6), 
@@ -672,16 +672,16 @@
                C_M_AXI_GP0_DATA_WIDTH, /// Data Width
                addr_width, /// Address width
                axi_mgp_id_width,  //// ID Width
-         axi_mgp_awuser_width,
+			   axi_mgp_awuser_width,
                axi_mgp_aruser_width,
                1,//axi_mgp_ruser_width,
-         1,//axi_mgp_wuser_width,
+			   1,//axi_mgp_wuser_width,
                1,//axi_mgp_buser_width,
                axi_mgp_outstanding,  //// Outstanding transactions
                axi_mst_excl_support, // EXCL Access Support
                axi_mgp_wr_id, //WR_ID
                axi_mgp_rd_id,
-         1) //RD_ID
+			   1) //RD_ID
   // M_AXI_GP0(.M_RESETN  (net_m_axi_gp0_rstn),
   M_AXI_HPM0_FPD(.M_RESETN  (net_m_axi_gp0_rstn),
             .M_ACLK    (MAXIGP0ACLK),
@@ -743,16 +743,16 @@
                C_M_AXI_GP1_DATA_WIDTH, /// Data Width
                addr_width, /// Address width
                axi_mgp_id_width,  //// ID Width
-         axi_mgp_awuser_width,
+			   axi_mgp_awuser_width,
                axi_mgp_aruser_width,
                1,//axi_mgp_ruser_width,
-         1,//axi_mgp_wuser_width,
+			   1,//axi_mgp_wuser_width,
                1,//axi_mgp_buser_width,
                axi_mgp_outstanding,  //// Outstanding transactions
                axi_mst_excl_support, // EXCL Access Support
                axi_mgp_wr_id, //WR_ID
                axi_mgp_rd_id, //RD_ID
-         1) //RD_ID
+			   1) //RD_ID
   // M_AXI_GP1(.M_RESETN  (net_m_axi_gp1_rstn),
   M_AXI_HPM1_FPD(.M_RESETN  (net_m_axi_gp1_rstn),
             .M_ACLK    (MAXIGP1ACLK),
@@ -814,16 +814,16 @@
                C_M_AXI_GP2_DATA_WIDTH, /// Data Width
                addr_width, /// Address width
                axi_mgp_id_width,  //// ID Width
-         axi_mgp_awuser_width,
+			   axi_mgp_awuser_width,
                axi_mgp_aruser_width,
                1,//axi_mgp_ruser_width,
-         1,//axi_mgp_wuser_width,
+			   1,//axi_mgp_wuser_width,
                1,//axi_mgp_buser_width,
                axi_mgp_outstanding,  //// Outstanding transactions
                axi_mst_excl_support, // EXCL Access Support
                axi_mgp_wr_id, //WR_ID
                axi_mgp_rd_id, //RD_ID
-         1) //RD_ID
+			   1) //RD_ID
   // M_AXI_GP2(.M_RESETN  (net_m_axi_gp2_rstn),
   M_AXI_HPM0_LPD(.M_RESETN  (net_m_axi_gp2_rstn),
             .M_ACLK    (MAXIGP2ACLK),

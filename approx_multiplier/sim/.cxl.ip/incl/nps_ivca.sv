@@ -100,12 +100,12 @@ function int determine_dest_port_from_routing_table(input int inport_num,bit [`N
   int noc_low_id  = noc_dst_id[`NOC_NPS_LOW_ID];
   `PRINT_MODEL(VERBOSITY_EN,$sformatf("noc_dst_id=%0d,noc_high_id=%0d,noc_mid_id=%0d,noc_low_id=%0d,nps_high_id=%0d,nps_mid_id=%0d",noc_dst_id,noc_high_id,noc_mid_id,noc_low_id,nps_high_id,nps_mid_id),DBG)
   if (nps_high_id == noc_high_id) 
-    if (nps_mid_id == noc_mid_id) 
-      noc_dst_port = p_nps_reg.reg_rt_low[inport_num][vc_num][noc_low_id];  
-    else 
-      noc_dst_port = p_nps_reg.reg_rt_mid[inport_num][vc_num][noc_mid_id];
+	  if (nps_mid_id == noc_mid_id) 
+	    noc_dst_port = p_nps_reg.reg_rt_low[inport_num][vc_num][noc_low_id];  
+	  else 
+	    noc_dst_port = p_nps_reg.reg_rt_mid[inport_num][vc_num][noc_mid_id];
   else 
-    noc_dst_port = p_nps_reg.reg_rt_high[inport_num][vc_num][noc_high_id];
+	  noc_dst_port = p_nps_reg.reg_rt_high[inport_num][vc_num][noc_high_id];
     if(inport_num == noc_dst_port) begin
       display_flit_and_vc(input_valid, noc_flit);
       $error("%m ::: at time %0t ::: ERROR ::: Flit cannot be routed to the same inport it came from. Inport='d%0d Routed to='d%0d\n nps_high_id='h%0h,nps_mid_id='h%0h,flit_dst_id='h%0h,flit_high_id='h%0h,flit_mid_id='h%0h,flit_low_id='h%0h",$time,inport_num,noc_dst_port,nps_high_id,nps_mid_id,noc_dst_id,noc_high_id,noc_mid_id,noc_low_id); 
@@ -122,12 +122,12 @@ function int determine_dest_port_from_routing_table(input int inport_num,bit [`N
   int noc_local_id  = noc_dst_id[`NOC_NPS_LOCAL_ID];
   `PRINT_MODEL(VERBOSITY_EN,$sformatf("noc_dst_id=%0d,noc_chip_id=%0d,noc_region_id=%0d,noc_local_id=%0d,nps_chip_id=%0d,nps_region_id=%0d",noc_dst_id,noc_chip_id,noc_region_id,noc_local_id,nps_chip_id,nps_region_id),DBG)
   if (nps_chip_id == noc_chip_id) 
-    if (nps_region_id == noc_region_id) 
-      noc_dst_port = p_nps_reg.reg_rt_local[inport_num][vc_num][noc_local_id];  
-    else 
-      noc_dst_port = p_nps_reg.reg_rt_region[inport_num][vc_num][noc_region_id];
+	  if (nps_region_id == noc_region_id) 
+	    noc_dst_port = p_nps_reg.reg_rt_local[inport_num][vc_num][noc_local_id];  
+	  else 
+	    noc_dst_port = p_nps_reg.reg_rt_region[inport_num][vc_num][noc_region_id];
   else 
-    noc_dst_port = p_nps_reg.reg_rt_chip[inport_num][vc_num][noc_chip_id];
+	  noc_dst_port = p_nps_reg.reg_rt_chip[inport_num][vc_num][noc_chip_id];
     if(inport_num == noc_dst_port) begin 
       display_flit_and_vc(input_valid, noc_flit);
       $error("%m ::: at time %0t ::: ERROR ::: Flit cannot be routed to the same inport it came from. Inport='d%0d Routed to='d%0d\n nps_chip_id='h%0h,nps_region_id='h%0h,flit_dst_id='h%0h,flit_chip_id='h%0h,flit_region_id='h%0h,flit_local_id='h%0h",$time,inport_num,noc_dst_port,nps_chip_id,nps_region_id,noc_dst_id,noc_chip_id,noc_region_id,noc_local_id); 

@@ -13,16 +13,16 @@
                axi_acp_data_width, // data width
                addr_width, /// address width
                axi_acp_id_width, // ID width
-         axi_acp_awuser_width,
-         axi_acp_aruser_width,
+			   axi_acp_awuser_width,
+			   axi_acp_aruser_width,
                1,//axi_acp_ruser_width,
-         1,//axi_acp_wuser_width,
+			   1,//axi_acp_wuser_width,
                1,//axi_acp_buser_width,
                axi_acp_outstanding, // outstanding transactions // 7 Reads and 3 Writes 
                axi_slv_excl_support, // Exclusive access support
                axi_acp_wr_outstanding,
                axi_acp_rd_outstanding,
-         1)
+			   1)
   S_AXI_ACP(.S_RESETN          (net_s_axi_acp_rstn),
             .S_ACLK            (SAXIACPACLK),
             // Write Address Channel
@@ -80,7 +80,7 @@
             .WR_DATA_ACK_DDR   (ddr_wr_ack_acp),
             .WR_DATA_ACK_OCM   (ocm_wr_ack_acp),
             .WR_DATA           (net_wr_data_acp), 
-      .WR_DATA_STRB      (net_wr_strb_acp),
+			.WR_DATA_STRB      (net_wr_strb_acp),
             .WR_ADDR           (net_wr_addr_acp), 
             .WR_BYTES          (net_wr_bytes_acp), 
             .WR_DATA_VALID_DDR (ddr_wr_dv_acp), 
