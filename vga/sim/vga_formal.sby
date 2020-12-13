@@ -1,0 +1,19 @@
+[tasks]
+bmc
+
+[options]
+bmc: mode bmc
+depth 10
+
+[engines]
+smtbmc
+
+[script]
+read -formal -sv i2c_formal.sv
+prep -top i2c_formal
+
+[files]
+i2c_formal.sv
+../src/i2c_master.sv
+../src/i2c_slave.sv
+
