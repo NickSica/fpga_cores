@@ -1,21 +1,17 @@
-/*********************************************************************************
- * Engineer: Nicholas Sica
- *
- * Create Date: 12/11/2020 05:21:00 PM
- * Design Name:
- * Module Name: vga_controller
- * Project Name: vga
- * Target Devices:
- * Tool Versions:
- * Description:
- *
- * Dependencies:
- *
- * Revision:
- * Revision 0.01 - File Created
- * Additional Comments:
- *
-*********************************************************************************/
+//-----------------------------------------------------------------------------
+// Title         : VGA Controller
+// Project       : vga_controller
+//-----------------------------------------------------------------------------
+// File          : vga_controller.sv
+// Author        : Nicholas Sica
+// Created       : 13.12.2020
+// Last modified : 13.12.2020
+//-----------------------------------------------------------------------------
+// Description :
+//------------------------------------------------------------------------------
+// Modification history :
+// 13.12.2020 : created
+//-----------------------------------------------------------------------------
 
 module vga_controller(
 	input logic clk_i,
